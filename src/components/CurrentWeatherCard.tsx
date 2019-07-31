@@ -1,37 +1,14 @@
 import React from 'react';
 import WeatherIcon from 'react-icons-weather';
 import { Card, Typography } from 'antd'
+import { Weather } from "../types"
 
 const { Title, Text } = Typography;
 
-type Props = {
-    main: {
-        temp: number,
-        pressure: number,
-        humidity: number,
-        temp_min: number,
-        temp_max: number
-    }
-    name: string
-    system: {
-        sunrise: number
-        sunset: number
-    }
-    weather: {
-        id: number
-        icon: string
-        main: string
-    }
-    wind: {
-        speed: number
-        deg: number
-    }
-}
-
-const CurrentWeatherCard: React.FC<Props> = (props) => {
+const CurrentWeatherCard: React.FC<Weather> = (props) => {
     const { main, name, system, weather, wind } = props
 
-    const getDate = (time: number) => {
+    const getTime = (time: number) => {
         const date = new Date(time)
         return `${date.getHours()}:${date.getMinutes()}`
     }
@@ -39,7 +16,9 @@ const CurrentWeatherCard: React.FC<Props> = (props) => {
     return (
         <Card
             style={{
-                width: 500
+                maxWidth: 500,
+                justifyContent: "center",
+                flexFlow: "row wrap"
             }}
         >
             <div
@@ -78,13 +57,11 @@ const CurrentWeatherCard: React.FC<Props> = (props) => {
                     <Text>Humidity: {main.humidity}%</Text>
                     <br/>
                     <Text>Wind: {wind.speed} km/h</Text>
+                    <br/>                
+                    <Text>Sunrise: {getTime(system.sunrise)}</Text>
+                    <br/>
+                    <Text>Sunset: {getTime(system.sunset)}</Text>
                 </div>
-            </div>
-
-            <div>
-                <Text>Sunrise: {getDate(system.sunrise)}</Text>
-                <br/>
-                <Text>Sunset: {getDate(system.sunset)}</Text>
             </div>
         </Card>
     )
