@@ -5,17 +5,21 @@ import { Input, Layout, List, Typography, Divider } from 'antd'
 import CurrentWeatherCard from "./components/CurrentWeatherCard"
 import ForecastCard from "./components/ForecastCard"
 import { getCurrentWeather, getHourlyForecast } from "./utils/getWeather"
-import { Forecast } from './types';
+import { Forecast, Weather } from './types';
 
 const { Search } = Input
 const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography
 
 const App: React.FC = () => {
-  const [currentWeather, setCurrentWeather] = React.useState()
-  const [forecast, setForecast] = React.useState()
+  const [currentWeather, setCurrentWeather] = React.useState<Weather | null>(null)
+  const [forecast, setForecast] = React.useState<Forecast[] | []>([])
 
   const getWeather = async (city: string) => {
+    if (!city) {
+      return
+    }
+
     const result = await getCurrentWeather(city)
 
     if(result.cod === 404) {
@@ -51,7 +55,7 @@ const App: React.FC = () => {
 
     return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
   }
-  
+
   console.log("Current Weather", currentWeather)
   console.log("Forecast", forecast)
 
@@ -70,9 +74,9 @@ const App: React.FC = () => {
             (<div>
               <Title>Current Weather in {currentWeather.name}</Title>
               <CurrentWeatherCard
-                weather={currentWeather.weather[0]}
+                weather={currentWeather.weather}
                 main={currentWeather.main}
-                system={currentWeather.sys}
+                sys={currentWeather.sys}
                 name={currentWeather.name}
                 wind={currentWeather.wind}
               ></CurrentWeatherCard>
@@ -80,7 +84,7 @@ const App: React.FC = () => {
               <Divider orientation="left">
                 <Title level={3}>{getForecastDate()}</Title>
               </Divider>
-              {forecast && 
+              {forecast &&
                 <List
                   dataSource={forecast}
                   grid={{
@@ -106,6 +110,7 @@ const App: React.FC = () => {
                         </div>
                       )
                     }
+
                     return (
                       <List.Item>
                         <ForecastCard
@@ -118,21 +123,14 @@ const App: React.FC = () => {
                       </List.Item>
                     )
                   }
-
-                  }
-                />
-              
-              
-              /*<ForecastList
-                forecast={forecast}
-              ></ForecastList>*/}
+                }/>}
             </div>) 
             : (<Text>
             City not found
           </Text>)}
         </div>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Current Weather ©2019 Created by Varga Máté István</Footer>
+      <Footer style={{ textAlign: 'center', bottom: 0 }}>Current Weather ©2019 Created by Varga Máté István</Footer>
       </Layout>
   );
 }

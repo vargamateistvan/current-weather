@@ -6,7 +6,7 @@ import { Weather } from "../types"
 const { Title, Text } = Typography;
 
 const CurrentWeatherCard: React.FC<Weather> = (props) => {
-    const { main, name, system, weather, wind } = props
+    const { main, name, sys, weather, wind } = props
 
     const getTime = (time: number) => {
         const date = new Date(time)
@@ -27,7 +27,7 @@ const CurrentWeatherCard: React.FC<Weather> = (props) => {
                 }}
             >
                 <Title level={3}>{name}</Title>
-                <Title level={4}>{weather.main}</Title>
+                <Title level={4}>{weather[0].main}</Title>
             </div>
 
             <div
@@ -43,7 +43,7 @@ const CurrentWeatherCard: React.FC<Weather> = (props) => {
                 >
                     <WeatherIcon
                         name="owm"
-                        iconId={weather.id}
+                        iconId={weather[0].id}
                         flip="horizontal"
                         rotate="90"
                         style={{
@@ -58,9 +58,9 @@ const CurrentWeatherCard: React.FC<Weather> = (props) => {
                     <br/>
                     <Text>Wind: {wind.speed} km/h</Text>
                     <br/>                
-                    <Text>Sunrise: {getTime(system.sunrise)}</Text>
+                    <Text>Sunrise: {getTime(sys.sunrise)}</Text>
                     <br/>
-                    <Text>Sunset: {getTime(system.sunset)}</Text>
+                    <Text>Sunset: {getTime(sys.sunset)}</Text>
                 </div>
             </div>
         </Card>

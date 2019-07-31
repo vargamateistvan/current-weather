@@ -1,3 +1,9 @@
+type WeatherElement = {
+    id: number
+    icon: string
+    main: string
+}
+
 export type Weather = {
     main: {
         temp: number,
@@ -7,15 +13,11 @@ export type Weather = {
         temp_max: number
     }
     name: string
-    system: {
+    sys: {
         sunrise: number
         sunset: number
     }
-    weather: {
-        id: number
-        icon: string
-        main: string
-    }
+    weather: Array<WeatherElement>
     wind: {
         speed: number
         deg: number
@@ -28,8 +30,5 @@ export type Forecast = {
     }
     dt: number
     dt_txt: string
-    weather: {
-        id: number
-        main: string
-    }[]
+    weather: Array<WeatherElement>
 }
