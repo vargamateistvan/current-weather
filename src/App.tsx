@@ -22,12 +22,22 @@ const App: React.FC = () => {
 
     const result = await getCurrentWeather(city)
 
+    if(!result) {
+      setCurrentWeather(null)
+      setForecast([])
+      return
+    }
+
     setCurrentWeather(result)
     await getForecast(city)
   }
 
   const getForecast = async (city: string) => {
     const result = await getHourlyForecast(city)
+
+    if(!result) {
+      return
+    }
 
     setForecast(result.list)
   }
