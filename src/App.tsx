@@ -22,20 +22,12 @@ const App: React.FC = () => {
 
     const result = await getCurrentWeather(city)
 
-    if(result.cod === 404) {
-      throw new Error("No city found!")
-    }
-
     setCurrentWeather(result)
     await getForecast(city)
   }
 
   const getForecast = async (city: string) => {
     const result = await getHourlyForecast(city)
-
-    if(result.cod === 404) {
-      throw new Error("No city found!")
-    }
 
     setForecast(result.list)
   }
@@ -53,7 +45,7 @@ const App: React.FC = () => {
       date = new Date()
     }
 
-    return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+    return `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`
   }
 
   console.log("Current Weather", currentWeather)
