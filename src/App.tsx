@@ -70,6 +70,7 @@ const App: React.FC = () => {
           size="large"
         ></Search>
       </Header>
+
       <Content style={{ padding: '0 50px' }}>
         <div style={{ background: '#fff', padding: 24, height: "100%" }}>
           {currentWeather ? 
@@ -132,13 +133,12 @@ const App: React.FC = () => {
                   }
                 }/>}
             </div>) 
-            : (<Text>
-            City not found
-          </Text>)}
+            : (<Text>City not found </Text>)}
         </div>
       </Content>
+
       <Footer style={{ textAlign: 'center', bottom: 0 }}>Current Weather ©2019 Created by Varga Máté István</Footer>
-      </Layout>
+    </Layout>
   );
 }
 

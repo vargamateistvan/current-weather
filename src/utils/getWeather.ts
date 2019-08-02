@@ -13,8 +13,12 @@ export async function getCurrentWeather(cityName: string) {
     
         const result = await response.json()
 
-        if(result.cod === "404") {
+        if (result.cod === "404") {
             throw new Error("No city found!")
+        }
+
+        if (result.cod === 429) {
+            throw new Error("Too many request")
         }
         
         return result
@@ -34,7 +38,7 @@ export async function getHourlyForecast(cityName: string) {
     
         const result = await response.json()
 
-        if(result.cod === "404") {
+        if (result.cod === "404") {
             throw new Error("No city found!")
         }
 
