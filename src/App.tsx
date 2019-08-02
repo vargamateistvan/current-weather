@@ -15,7 +15,7 @@ const App: React.FC = () => {
   const [currentWeather, setCurrentWeather] = React.useState<Weather | null>(null)
   const [forecast, setForecast] = React.useState<Forecast[] | []>([])
 
-  const getWeather = async (city: string) => {
+  const getWeather = React.useCallback(async (city: string) => {
     if (!city) {
       return
     }
@@ -30,7 +30,7 @@ const App: React.FC = () => {
 
     setCurrentWeather(result)
     await getForecast(city)
-  }
+  }, [])
 
   const getForecast = async (city: string) => {
     const result = await getHourlyForecast(city)
@@ -57,6 +57,10 @@ const App: React.FC = () => {
 
     return `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`
   }
+
+  React.useEffect(() => {
+    getWeather("Budapest")
+  }, [getWeather])
 
   console.log("Current Weather", currentWeather)
   console.log("Forecast", forecast)
