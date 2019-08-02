@@ -89,7 +89,12 @@ const App: React.FC = () => {
                   dataSource={forecast}
                   grid={{
                     gutter: 8,
-                    column: 8
+                    column: 8,
+                    xs: 1,
+                    sm: 2,
+                    md: 4,
+                    lg: 6,
+                    xl: 8
                   }}
                   renderItem={(day: Forecast) => {
                     if (getForecastHour(day.dt_txt) === 0) {
